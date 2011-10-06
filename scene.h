@@ -1,0 +1,30 @@
+#ifndef SCENE_H
+#define SCENE_H
+
+#include <QGraphicsItem>
+#include <QList>
+#include <QPointF>
+#include <QRectF>
+#include <QPolygonF>
+#include <QPainter>
+#include <QPainterPath>
+#include <QWidget>
+#include <iostream>
+#include <QGraphicsScene>
+#include <QGraphicsSceneMouseEvent>
+
+
+using namespace std;
+
+class scene:public QGraphicsScene{
+	private:
+				
+	public:
+		scene();
+		//~scene();
+		void mousePressEvent(QGraphicsSceneMouseEvent *event);
+		void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
+		
+
+};
+#endif
