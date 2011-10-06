@@ -4,24 +4,106 @@ using namespace std;
 
 scene::scene(){
 	update_intervall = 25;
-	for (int i = 0; i <= 99; i++){
-		
-		NbPartikel *neu = new NbPartikel(QPointF(rand()%700 - 350, rand()%500-250),QPointF(rand()%500-250, rand()%500-250), rand()%20+5, 10);		
+	for (int i = 0; i <= 2; i++){
+		int rm = rand()%50+5;
+		NbPartikel *neu = new NbPartikel(QPointF(rand()%700 - 350, rand()%500-250),QPointF(0, 0), rm, rm*rm);
 		
 		neu->setPos(neu->getPosition());
 		//neu->setPos(QPointF(0,0));
 		this->addItem(neu);
 		this->update();
 		this->setStickyFocus(FALSE);
-		Partikel.append(neu);
-		
+		Partikel.append(neu);		
 	}
+	
+}
+
+kd_tree scene::create_tree(kd_tree * baum, int n = 1){	
+	
+	baum->l = new kd_tree;
+	baum->r = new kd_tree;
+	if (n < 7){
+		if (n % 2 == 0){
+			baum->pos.setX(baum->pos.x()/2);
+			for (int i = 0; i < baum->liste.size(); i++){
+				if (baum->liste[i]->getPosition().x() + 400 <= baum->pos.x()){
+					baum->l->liste.append(baum->liste[i]);
+				}
+				else{
+					baum->r->liste.append(baum->liste[i]);
+				}
+			}
+		}
+		else{
+			baum->pos.setY(baum->pos.y()/2);
+			for (int i = 0; i < baum->liste.size(); i++){
+				if (baum->liste[i]->getPosition().y() + 300 <= baum->pos.y()){
+					baum->l->liste.append(baum->liste[i]);
+				}
+				else{
+					baum->r->liste.append(baum->liste[i]);
+				}
+			}
+			
+		}
+		baum->l->pos = baum->pos;
+		baum->r->pos = baum->pos;
+		return create_tree(baum->l, ++n);
+		return create_tree(baum->r, ++n);
+	}
+	else{
+		return *baum;	
+	}
+	
+	
+}
+
+QList<NbPartikel *> scene::find_list(QPointF pos, kd_tree * baum, int n = 1){
+	if (n < 6){
+		if (n % 2 == 0){
+			if (pos.x() + 400 <= baum->pos.x()){
+				return find_list(pos,baum->l,++n);
+			}
+			else{
+				return find_list(pos,baum->r,++n);
+			}
+		}
+		else{
+			if (pos.y() + 300  <= baum->pos.y()){
+				return find_list(pos,baum->l,++n);
+			}
+			else{
+				return find_list(pos,baum->r,++n);
+			}
+		}
+		//return create_tree(baum->l, ++n);
+		//return create_tree(baum->r, ++n);
+	}
+	else{
+		return baum->liste;
+	}
+
 }
 
 void scene::update_world(){
+	for (int i = 0; i <= Partikel.size()-1; i++){
+	        Partikel[i]->gravity(Partikel);
+                Partikel[i]->setAcceleration(Partikel[i]->getForce()/Partikel[i]->getMass());
+                //Partikel[i]->setAcceleration(QPointF(0,0));
+                Partikel[i]->setVelocity(Partikel[i]->getVelocity()-(update_intervall/1000)*(update_intervall/1000)*Partikel[i]->getAcceleration());
+	}
+	
+	/*
+	kd_tree *tree = new kd_tree;
+	tree->liste = Partikel;
+	tree->pos.setX(400);
+	tree->pos.setY(300);
+	create_tree(tree);
+	*/	
 	QList<NbPartikel *> Coll_List = Partikel;
 	while(Coll_List.size() > 1){
 		for (int i = 0; i <= Coll_List.size()-1; i++){		
+			
 			for (int j = 0; j <= Coll_List.size()-1; j++){
 				if (i != j){
 					if (getDistance(Coll_List[i],Coll_List[j]) <= ((Coll_List[i]->getRadius()+Coll_List[j]->getRadius()))/2){
@@ -31,8 +113,8 @@ void scene::update_world(){
 						
 						
 						
-						Coll_List[i]->setPosition(Coll_List[i]->getPosition()-2*(update_intervall/1000)*Coll_List[i]->getVelocity());
-						Coll_List[j]->setPosition(Coll_List[j]->getPosition()-2*(update_intervall/1000)*Coll_List[j]->getVelocity());
+						Coll_List[i]->setPosition(Coll_List[i]->getPosition()-1.5*(update_intervall/1000)*Coll_List[i]->getVelocity());
+						Coll_List[j]->setPosition(Coll_List[j]->getPosition()-1.5*(update_intervall/1000)*Coll_List[j]->getVelocity());
 						
 						Coll_List[i]->afterImpact(Coll_List[j]);
 						
@@ -42,18 +124,37 @@ void scene::update_world(){
 			Coll_List.removeAt(i);		
 		}
 	}
+	
+	
+	
 	for (int i = 0; i <= Partikel.size()-1; i++){		
 		QPointF pos = Partikel[i]->getPosition();
 		double rad = Partikel[i]->getRadius()/2;
 		if (((pos + QPointF(+rad, 0)).x() > 400) || ((pos + QPointF(-rad, 0)).x() < -400)){
+			/*if ((pos + QPointF(+rad, 0)).x() > 400){
+				Partikel[i]->setPosition(QPointF(400-rad-1,pos.y()));
+			}
+			else{
+				Partikel[i]->setPosition(QPointF(-400+rad+1,pos.y()));
+			}*/		
+			Partikel[i]->setPosition(Partikel[i]->getPosition()-1.5*(update_intervall/1000)*Partikel[i]->getVelocity());	
 			Partikel[i]->setVelocity(QPointF(-Partikel[i]->getVelocity().x(),Partikel[i]->getVelocity().y()));
 		}
 		
 		if (((pos + QPointF(0, +rad)).y() > 300) || ((pos + QPointF(0, -rad)).y() < -300)){
+			/*if ((pos + QPointF(+rad, 0)).x() > 300){
+				Partikel[i]->setPosition(QPointF(pos.x(),300-rad-1));
+			}
+			else{
+				Partikel[i]->setPosition(QPointF(pos.x(),-300+rad+1));
+			}*/
+			Partikel[i]->setPosition(Partikel[i]->getPosition()-1.5*(update_intervall/1000)*Partikel[i]->getVelocity());
 			Partikel[i]->setVelocity(QPointF(Partikel[i]->getVelocity().x(),-Partikel[i]->getVelocity().y()));
 		}
 		
-		QPointF vel = (update_intervall/1000) * Partikel[i]->getVelocity();
+		
+		QPointF vel = (update_intervall/1000) * (Partikel[i]->getVelocity());
+		//Partikel[i]->setVelocity(vel);
 		Partikel[i]->setPosition(Partikel[i]->getPosition() +  vel);
 		Partikel[i]->setPos(Partikel[i]->getPosition());		
 	}

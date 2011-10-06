@@ -22,6 +22,8 @@ class NbPartikel:public QGraphicsItem{
 		QPointF Position;
 		QPointF Velocity;
 		QPointF Force;
+		QPointF newForce;
+		QPointF Acceleration;
 		double Radius;
 		double Mass;
 				
@@ -35,14 +37,17 @@ class NbPartikel:public QGraphicsItem{
 		void setForce(QPointF);
 		void setRadius(double);
 		void setMass(double);
+		void setAcceleration(QPointF);
 		QPointF getPosition();
 		QPointF getVelocity();
 		QPointF getForce();
 		double getRadius();
 		double getMass();
+		QPointF getAcceleration();
 		
 		friend double getDistance(NbPartikel *, NbPartikel *);
 		void afterImpact(NbPartikel*);
+		void gravity(QList<NbPartikel*>);
 		friend double qpsp(QPointF, QPointF);
 		
 		QRectF boundingRect() const;

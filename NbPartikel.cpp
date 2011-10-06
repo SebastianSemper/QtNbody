@@ -2,6 +2,8 @@
 
 using namespace std;
 
+const double G = 6.6738480E4;
+
 NbPartikel::NbPartikel(QPointF Pos, QPointF Vel, double Rad, double m){
 	Position = Pos;
 	Velocity = Vel;
@@ -29,8 +31,25 @@ double NbPartikel::getMass(){
 	return Mass;
 }
 
+QPointF NbPartikel::getAcceleration(){
+        return Acceleration;
+}
+
+QPointF NbPartikel::getForce(){
+        return Force;
+}
+
 void NbPartikel::setPosition(QPointF pos){
 	Position = pos;
+	this->setPos(Position);
+}
+
+void NbPartikel::setAcceleration(QPointF a){
+        Acceleration = a;
+}
+
+void NbPartikel::setForce(QPointF f){
+        Force = f;
 }
 
 void NbPartikel::setVelocity(QPointF vel){
@@ -51,9 +70,15 @@ QRectF NbPartikel::boundingRect() const{
 void NbPartikel::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget){
 	painter->setRenderHint(QPainter::Antialiasing);
 	
-        painter->setBrush(Qt::black);        
+        painter->setBrush(Qt::gray);
         
         painter->drawEllipse(-Radius/2, -Radius/2, Radius, Radius);
+        
+        painter->setPen(Qt::red);
+        painter->drawLine(QPointF(0,0), 02*Velocity);
+        
+        painter->setPen(Qt::blue);
+        painter->drawLine(QPointF(0,0), -0.001*Force);
 }
 
 double qpsp(QPointF a, QPointF b){
@@ -96,3 +121,15 @@ void NbPartikel::afterImpact(NbPartikel *p){
 	p->setVelocity(v2o + v2pafter);
 }
 
+void NbPartikel::gravity(QList<NbPartikel*> p){
+        Force.setX(0); Force.setY(0);
+        for(int i = 0; i < p.size(); i++){
+                QPointF diff = Position - p[i]->getPosition();
+                if((diff.x() != 0) && (diff.y() != 0)){
+                        Force += G*Mass*p[i]->getMass()*1.0/pow(qpsp(diff,diff),3.0/2.0)*diff;
+                }
+        }
+        if(pow(qpsp(Force,Force), 0.5) > 90000){
+                Force *= 90000/pow(qpsp(Force,Force), 0.5);
+        }
+}
