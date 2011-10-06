@@ -16,6 +16,14 @@ QPointF NbPartikel::getPosition(){
 	return Position;
 }
 
+QPointF NbPartikel::getVelocity(){
+	return Velocity;
+}
+
+void NbPartikel::setPosition(QPointF pos){
+	Position = pos;
+}
+
 QRectF NbPartikel::boundingRect() const{
 	return QRectF(-20, -20, 20, 20);
 }

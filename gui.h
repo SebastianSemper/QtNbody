@@ -3,6 +3,7 @@
 
 #include "ui_gui.h"
 #include "scene.h"
+#include <QTimer>
 
 
 using namespace std; 
@@ -17,10 +18,10 @@ class gui : public QMainWindow, public Ui::MainWindow {
 	    	gui(QMainWindow *parent = 0);
 	    	~gui();
 	private slots:
-		//void make_spline();
-		//void quit();
+		
 	private :
-				
+		void update();
+		scene universe;		
 };
 
 #endif

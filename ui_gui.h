@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'gui.ui'
 **
-** Created: Thu Oct 6 14:31:31 2011
+** Created: Thu Oct 6 14:50:04 2011
 **      by: Qt User Interface Compiler version 4.7.3
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -38,9 +38,6 @@ public:
         plane->setObjectName(QString::fromUtf8("plane"));
         plane->setGeometry(QRect(0, 0, 801, 601));
         plane->setMouseTracking(true);
-        plane->setAcceptDrops(false);
-        plane->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-        plane->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
         plane->setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
         MainWindow->setCentralWidget(centralwidget);
 

@@ -4,16 +4,25 @@ using namespace std;
 
 scene::scene(){
 	for (int i = 0; i <= 20; i++){
-		QPointF pos(rand()%200 - 100, rand()%200-100);
-		cout << pos.x() << "/" << pos.y() << endl;
-		NbPartikel *neu = new NbPartikel(QPointF(rand()%10 - 5, rand()%10-5),QPointF(rand()%6 - 3, rand()%6-3),10);		
+		
+		NbPartikel *neu = new NbPartikel(QPointF(rand()%400 - 200, rand()%400-200),QPointF(rand()%6 - 3, rand()%6-3),10);		
 		
 		neu->setPos(neu->getPosition());
+		//neu->setPos(QPointF(0,0));
 		this->addItem(neu);
 		this->update();
 		Partikel.append(neu);
 		
 	}
+}
+
+void scene::update_world(){
+	for (int i = 0; i <= Partikel.size()-1; i++){
+		Partikel[i]->setPosition(Partikel[i]->getPosition() +  Partikel[i]->getVelocity());
+		Partikel[i]->setPos(Partikel[i]->getPosition());
+		
+	}
+	this->update();
 }
 
 void scene::mousePressEvent(QGraphicsSceneMouseEvent *event){

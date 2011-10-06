@@ -26,15 +26,6 @@
     <property name="mouseTracking">
      <bool>true</bool>
     </property>
-    <property name="acceptDrops">
-     <bool>false</bool>
-    </property>
-    <property name="verticalScrollBarPolicy">
-     <enum>Qt::ScrollBarAlwaysOff</enum>
-    </property>
-    <property name="horizontalScrollBarPolicy">
-     <enum>Qt::ScrollBarAlwaysOff</enum>
-    </property>
     <property name="viewportUpdateMode">
      <enum>QGraphicsView::FullViewportUpdate</enum>
     </property>

@@ -22,6 +22,7 @@ class scene:public QGraphicsScene{
 		QList<NbPartikel *> Partikel;	
 	public:
 		scene();
+		void update_world();
 		//~scene();
 		void mousePressEvent(QGraphicsSceneMouseEvent *event);
 		void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
