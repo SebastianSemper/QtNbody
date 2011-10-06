@@ -12,13 +12,14 @@
 #include <iostream>
 #include <QGraphicsScene>
 #include <QGraphicsSceneMouseEvent>
+#include "NbPartikel.h"
 
 
 using namespace std;
 
 class scene:public QGraphicsScene{
 	private:
-				
+		QList<NbPartikel *> Partikel;	
 	public:
 		scene();
 		//~scene();

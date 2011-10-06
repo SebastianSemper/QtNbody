@@ -2,12 +2,18 @@
 
 using namespace std;
 
-NbPartikel::NbPartikel(QPointF Vel, QPointF Ma, double rad){
-	
+NbPartikel::NbPartikel(QPointF Pos, QPointF Vel, double Rad){
+	Position = Pos;
+	Velocity = Vel;
+	Radius = Rad;
 }
 
 NbPartikel::~NbPartikel(){
 
+}
+
+QPointF NbPartikel::getPosition(){
+	return Position;
 }
 
 QRectF NbPartikel::boundingRect() const{

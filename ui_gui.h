@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'gui.ui'
 **
-** Created: Thu Oct 6 13:22:52 2011
+** Created: Thu Oct 6 14:31:31 2011
 **      by: Qt User Interface Compiler version 4.7.3
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -25,7 +25,7 @@ class Ui_MainWindow
 {
 public:
     QWidget *centralwidget;
-    QGraphicsView *graphicsView;
+    QGraphicsView *plane;
 
     void setupUi(QMainWindow *MainWindow)
     {
@@ -34,14 +34,14 @@ public:
         MainWindow->resize(800, 600);
         centralwidget = new QWidget(MainWindow);
         centralwidget->setObjectName(QString::fromUtf8("centralwidget"));
-        graphicsView = new QGraphicsView(centralwidget);
-        graphicsView->setObjectName(QString::fromUtf8("graphicsView"));
-        graphicsView->setGeometry(QRect(0, 0, 801, 601));
-        graphicsView->setMouseTracking(true);
-        graphicsView->setAcceptDrops(false);
-        graphicsView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-        graphicsView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-        graphicsView->setViewportUpdateMode(QGraphicsView::SmartViewportUpdate);
+        plane = new QGraphicsView(centralwidget);
+        plane->setObjectName(QString::fromUtf8("plane"));
+        plane->setGeometry(QRect(0, 0, 801, 601));
+        plane->setMouseTracking(true);
+        plane->setAcceptDrops(false);
+        plane->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+        plane->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+        plane->setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
         MainWindow->setCentralWidget(centralwidget);
 
         retranslateUi(MainWindow);

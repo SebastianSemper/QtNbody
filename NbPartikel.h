@@ -18,22 +18,27 @@ using namespace std;
 
 class NbPartikel:public QGraphicsItem{
 	private:
+		QPointF Position;
 		QPointF Velocity;
 		QPointF Force;
 		double Radius;
 				
 	public:
+	
+	
 		NbPartikel(QPointF, QPointF, double);
 		~NbPartikel();
+		void setPosition(QPointF);
 		void setVelocity(QPointF);
 		void setForce(QPointF);
 		void setRadius(double);
+		QPointF getPosition();
 		QPointF getVelocity();
 		QPointF getForce();
 		double getRadius();
 		
-		
-		
+		QRectF boundingRect() const;
+		void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);	
 
 };
 #endif

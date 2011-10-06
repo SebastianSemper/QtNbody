@@ -14,7 +14,7 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QGraphicsView" name="graphicsView">
+   <widget class="QGraphicsView" name="plane">
     <property name="geometry">
      <rect>
       <x>0</x>
@@ -36,7 +36,7 @@
      <enum>Qt::ScrollBarAlwaysOff</enum>
     </property>
     <property name="viewportUpdateMode">
-     <enum>QGraphicsView::SmartViewportUpdate</enum>
+     <enum>QGraphicsView::FullViewportUpdate</enum>
     </property>
    </widget>
   </widget>
