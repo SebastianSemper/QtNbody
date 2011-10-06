@@ -4,26 +4,26 @@ using namespace std;
 
 
 gui::gui(QMainWindow *parent) : QMainWindow(parent){
-        //Methode, die die erstellte GUI läd und erstellt.
+        
         setupUi(this);
         
         plane->setScene(&universe);
+        plane->centerOn(0,0);
 	plane->show();
 	
 	QTimer *timer = new QTimer(this);
-     	connect(timer, SIGNAL(timeout()), this, SLOT(update()));
-     	timer->start(100);
+     	connect(timer, SIGNAL(timeout()), this, SLOT(update_gui()));
+     	timer->start(universe.update_intervall);
 
 }
 
-//Destruktor der Klasse "GUI".
+
 gui::~gui(){
 	
 
 }
 
-void gui::update(){
-	cout << "bam";
+void gui::update_gui(){
 	universe.update_world();
 }
 	

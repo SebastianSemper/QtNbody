@@ -18,9 +18,9 @@ class gui : public QMainWindow, public Ui::MainWindow {
 	    	gui(QMainWindow *parent = 0);
 	    	~gui();
 	private slots:
-		
+		void update_gui();
 	private :
-		void update();
+		
 		scene universe;		
 };
 

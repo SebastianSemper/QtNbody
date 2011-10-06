@@ -19,8 +19,10 @@ using namespace std;
 
 class scene:public QGraphicsScene{
 	private:
-		QList<NbPartikel *> Partikel;	
+		QList<NbPartikel *> Partikel;
+			
 	public:
+		double update_intervall;
 		scene();
 		void update_world();
 		//~scene();
