@@ -12,6 +12,7 @@
 #include <iostream>
 #include <QGraphicsScene>
 #include <QGraphicsSceneMouseEvent>
+#include <math.h>
 
 
 using namespace std;
@@ -36,6 +37,8 @@ class NbPartikel:public QGraphicsItem{
 		QPointF getVelocity();
 		QPointF getForce();
 		double getRadius();
+		
+		friend double getDistance(NbPartikel *, NbPartikel *);
 		
 		QRectF boundingRect() const;
 		void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);	

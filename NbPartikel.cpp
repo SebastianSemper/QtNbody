@@ -32,6 +32,10 @@ void NbPartikel::setVelocity(QPointF vel){
 	Velocity = vel;
 }
 
+double getDistance( NbPartikel * x, NbPartikel * y){
+	return sqrt((x->Position.x()-y->Position.x())*(x->Position.x()-y->Position.x()) + (x->Position.y()-y->Position.y())*(x->Position.y()-y->Position.y()));
+}
+
 QRectF NbPartikel::boundingRect() const{
 	return QRectF(-20, -20, 20, 20);
 }

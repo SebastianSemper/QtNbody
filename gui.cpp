@@ -7,6 +7,7 @@ gui::gui(QMainWindow *parent) : QMainWindow(parent){
         
         setupUi(this);
         
+        
         plane->setScene(&universe);
         plane->centerOn(0,0);
 	plane->show();
