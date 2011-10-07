@@ -2,7 +2,7 @@
 
 using namespace std;
 
-const double G = 6.6738480E4;
+const double G = 6.6738480E3;
 
 NbPartikel::NbPartikel(QPointF Pos, QPointF Vel, double Rad, double m){
 	Position = Pos;
@@ -130,7 +130,7 @@ void NbPartikel::gravity(QList<NbPartikel*> p){
                         Force += G*Mass*p[i]->getMass()*1.0/pow(qpsp(diff,diff),3.0/2.0)*diff;
                 }
         }
-        if(pow(qpsp(Force,Force), 0.5) > 90000){
-                Force *= 90000/pow(qpsp(Force,Force), 0.5);
+        if(pow(qpsp(Force,Force), 0.5) > 100000){
+                Force *= 100000/pow(qpsp(Force,Force), 0.5);
         }
 }

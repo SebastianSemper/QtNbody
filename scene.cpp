@@ -15,8 +15,8 @@ scene::scene(){
 			vis.append(neu);
 		}	
 	}*/
-	for (int i = 0; i <= 3; i++){
-		int rm = rand()%100+5;
+	for (int i = 0; i <= 4; i++){
+		int rm = rand()%70+5;
 		NbPartikel *neu = new NbPartikel(QPointF(rand()%700 - 350, rand()%500-250),QPointF(0, 0), rm, rm*rm);
 		
 		neu->setPos(neu->getPosition());
