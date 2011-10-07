@@ -75,10 +75,11 @@ void NbPartikel::paint(QPainter *painter, const QStyleOptionGraphicsItem *option
         painter->drawEllipse(-Radius/2, -Radius/2, Radius, Radius);
         
         painter->setPen(Qt::red);
-        painter->drawLine(QPointF(0,0), 02*Velocity);
+        painter->drawLine(QPointF(0,0), 0.5*Velocity);
         
         painter->setPen(Qt::blue);
-        painter->drawLine(QPointF(0,0), -0.001*Force);
+        painter->drawLine(QPointF(0,0), -0.0005*Force);
+        
 }
 
 double qpsp(QPointF a, QPointF b){

@@ -4,12 +4,24 @@ using namespace std;
 
 scene::scene(){
 	update_intervall = 25;
-	for (int i = 0; i <= 2; i++){
-		int rm = rand()%50+5;
+	grid_size = 10;
+	
+	this->	addRect(-400,-300,800,600);
+	
+	/*for (int i = 0; i < 800/grid_size; i++){
+		for (int j = 0; j < 600/grid_size; j++){			
+			NbVis * neu; neu = new NbVis(i*grid_size-400,j*grid_size-300,255,255,255);
+			this->addItem(neu);
+			vis.append(neu);
+		}	
+	}*/
+	for (int i = 0; i <= 3; i++){
+		int rm = rand()%100+5;
 		NbPartikel *neu = new NbPartikel(QPointF(rand()%700 - 350, rand()%500-250),QPointF(0, 0), rm, rm*rm);
 		
 		neu->setPos(neu->getPosition());
 		//neu->setPos(QPointF(0,0));
+		//this->addEllipse(neu->getPosition().x(),neu->getPosition().y(),1,1);
 		this->addItem(neu);
 		this->update();
 		this->setStickyFocus(FALSE);
@@ -86,7 +98,27 @@ QList<NbPartikel *> scene::find_list(QPointF pos, kd_tree * baum, int n = 1){
 }
 
 void scene::update_world(){
+	
+	/*int n = 0;
+	for (int i = 0; i < 800/grid_size; i++){
+		for (int j = 0; j < 600/grid_size; j++){			
+			NbPartikel grid(QPoint(i*grid_size-400,j*grid_size-300), QPoint(0,0), 1, 100);
+			
+			grid.gravity(Partikel);
+			int value = sqrt(grid.getForce().x()*grid.getForce().x()+grid.getForce().y()*grid.getForce().y());
+			//cout << value << " - " << (1.0/value*255) << endl;
+			//i*grid_size-400
+			//j*grid_size-300
+			int color = 1.0/value*255;
+			if(color >= 255){color = 255;}
+			if(color <= 0){color = 255;}
+			vis[n]->setCol(255, color, color);
+			n++;
+		}	
+	}*/
+	
 	for (int i = 0; i <= Partikel.size()-1; i++){
+	        
 	        Partikel[i]->gravity(Partikel);
                 Partikel[i]->setAcceleration(Partikel[i]->getForce()/Partikel[i]->getMass());
                 //Partikel[i]->setAcceleration(QPointF(0,0));
@@ -156,6 +188,7 @@ void scene::update_world(){
 		QPointF vel = (update_intervall/1000) * (Partikel[i]->getVelocity());
 		//Partikel[i]->setVelocity(vel);
 		Partikel[i]->setPosition(Partikel[i]->getPosition() +  vel);
+		//this->addEllipse(Partikel[i]->getPosition().x(), Partikel[i]->getPosition().y(),1,1);
 		Partikel[i]->setPos(Partikel[i]->getPosition());		
 	}
 	

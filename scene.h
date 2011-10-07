@@ -12,8 +12,9 @@
 #include <iostream>
 #include <QGraphicsScene>
 #include <QGraphicsSceneMouseEvent>
+#include <math.h>
 #include "NbPartikel.h"
-
+#include "NbVis.h"
 
 using namespace std;
 
@@ -30,6 +31,10 @@ class scene:public QGraphicsScene{
 		
 		kd_tree create_tree(kd_tree *,int);
 		QList<NbPartikel *> find_list(QPointF, kd_tree *, int);
+		
+		int grid_size;
+		QList<NbVis *> vis;
+		
 		
 	public:
 		
