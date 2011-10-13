@@ -7,6 +7,7 @@ scene::scene(){
 	grid_size = 10;
 	
 	this->	addRect(-400,-300,800,600);
+	//this->	addRect(0,0,3,3);
 	
 	/*for (int i = 0; i < 800/grid_size; i++){
 		for (int j = 0; j < 600/grid_size; j++){			
@@ -15,9 +16,9 @@ scene::scene(){
 			vis.append(neu);
 		}	
 	}*/
-	for (int i = 0; i <= 4; i++){
-		int rm = rand()%70+5;
-		NbPartikel *neu = new NbPartikel(QPointF(rand()%700 - 350, rand()%500-250),QPointF(0, 0), rm, rm*rm);
+	for (int i = 0; i <= 199; i++){
+		int rm = rand()%9+1;
+		NbPartikel *neu = new NbPartikel(QPointF(rand()%700 - 350, rand()%500-250),QPointF(0, 0), rm, rm);
 		
 		neu->setPos(neu->getPosition());
 		//neu->setPos(QPointF(0,0));
@@ -139,17 +140,16 @@ void scene::update_world(){
 			for (int j = 0; j <= Coll_List.size()-1; j++){
 				if (i != j){
 					if (getDistance(Coll_List[i],Coll_List[j]) <= ((Coll_List[i]->getRadius()+Coll_List[j]->getRadius()))/2){
-						//Coll_List[i]->setVelocity(QPointF(0,0));
-						//Coll_List[j]->setVelocity(QPointF(0,0));
+						
 						//QPointF tmp = Coll_List[i]->getPosition() - Coll_List[j]->getPosition();
 						
-						
-						
-						Coll_List[i]->setPosition(Coll_List[i]->getPosition()-1.5*(update_intervall/1000)*Coll_List[i]->getVelocity());
-						Coll_List[j]->setPosition(Coll_List[j]->getPosition()-1.5*(update_intervall/1000)*Coll_List[j]->getVelocity());
+						Coll_List[i]->setPosition(Coll_List[i]->getPosition()-2*(update_intervall/1000)*Coll_List[i]->getVelocity());
+						Coll_List[j]->setPosition(Coll_List[j]->getPosition()-2*(update_intervall/1000)*Coll_List[j]->getVelocity());
 						
 						Coll_List[i]->afterImpact(Coll_List[j]);
 						
+						//Coll_List[i]->setVelocity(QPointF(0,0));
+						//Coll_List[j]->setVelocity(QPointF(0,0));
 					}
 				}
 			}
@@ -169,7 +169,7 @@ void scene::update_world(){
 			else{
 				Partikel[i]->setPosition(QPointF(-400+rad+1,pos.y()));
 			}*/		
-			Partikel[i]->setPosition(Partikel[i]->getPosition()-1.5*(update_intervall/1000)*Partikel[i]->getVelocity());	
+			Partikel[i]->setPosition(Partikel[i]->getPosition()-1*(update_intervall/1000)*Partikel[i]->getVelocity());	
 			Partikel[i]->setVelocity(QPointF(-Partikel[i]->getVelocity().x(),Partikel[i]->getVelocity().y()));
 		}
 		
@@ -180,7 +180,7 @@ void scene::update_world(){
 			else{
 				Partikel[i]->setPosition(QPointF(pos.x(),-300+rad+1));
 			}*/
-			Partikel[i]->setPosition(Partikel[i]->getPosition()-1.5*(update_intervall/1000)*Partikel[i]->getVelocity());
+			Partikel[i]->setPosition(Partikel[i]->getPosition()-1*(update_intervall/1000)*Partikel[i]->getVelocity());
 			Partikel[i]->setVelocity(QPointF(Partikel[i]->getVelocity().x(),-Partikel[i]->getVelocity().y()));
 		}
 		

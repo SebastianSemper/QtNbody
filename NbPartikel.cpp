@@ -2,7 +2,7 @@
 
 using namespace std;
 
-const double G = 6.6738480E3;
+const double G = 6.6738480E2;
 
 NbPartikel::NbPartikel(QPointF Pos, QPointF Vel, double Rad, double m){
 	Position = Pos;
@@ -74,11 +74,11 @@ void NbPartikel::paint(QPainter *painter, const QStyleOptionGraphicsItem *option
         
         painter->drawEllipse(-Radius/2, -Radius/2, Radius, Radius);
         
-        painter->setPen(Qt::red);
-        painter->drawLine(QPointF(0,0), 0.5*Velocity);
+        //painter->setPen(Qt::red);
+        //painter->drawLine(QPointF(0,0), 0.5*Velocity);
         
-        painter->setPen(Qt::blue);
-        painter->drawLine(QPointF(0,0), -0.0005*Force);
+        //painter->setPen(Qt::blue);
+        //painter->drawLine(QPointF(0,0), -0.0005*Force);
         
 }
 
@@ -89,7 +89,7 @@ double qpsp(QPointF a, QPointF b){
 }
 
 void NbPartikel::afterImpact(NbPartikel *p){
-	double m2 = p->getMass();
+	double m2 = p->getMass(), k = 0.9;
 	QPointF p2 = p->getPosition(), v2 = p->getVelocity(), v1p, v1o, v2p, v2o, mz = Position - p->getPosition();
 	
 	/*if((mz.x() == 0) && (mz.y() == 0)){
@@ -105,11 +105,13 @@ void NbPartikel::afterImpact(NbPartikel *p){
 	v1o = Velocity - v1p;
 	v2o = v2 - v2p;
 	
-	QPointF tmp2 = 2/(Mass+p->getMass())*(Mass*v1p+m2*v2p);
+	//QPointF tmp2 = 2/(Mass+p->getMass())*(Mass*v1p+m2*v2p);
 	
-	v1pafter = tmp2 - v1p;
-	v2pafter = tmp2 - v2p;
+	//v1pafter = tmp2 - v1p;
+	//v2pafter = tmp2 - v2p;
 	
+	v1pafter = (Mass*v1p + p->getMass()*v2p - p->getMass()*(v1p-v2p)*k)/(Mass + p->getMass());
+	v2pafter = (Mass*v1p + p->getMass()*v2p - p->getMass()*(v2p-v1p)*k)/(Mass + p->getMass());
 	/*cout << " - impact - " << endl;
 	cout << tmp1.x() << " - " << tmp1.y() << endl;
 	cout << v1o.x() << " - " << v1o.y() << endl;
@@ -126,11 +128,12 @@ void NbPartikel::gravity(QList<NbPartikel*> p){
         Force.setX(0); Force.setY(0);
         for(int i = 0; i < p.size(); i++){
                 QPointF diff = Position - p[i]->getPosition();
-                if((diff.x() != 0) && (diff.y() != 0)){
+                if(pow(qpsp(diff,diff), 0.5) <= 2){
+                	continue;
+        	}
+                else if((diff.x() != 0) && (diff.y() != 0)){
                         Force += G*Mass*p[i]->getMass()*1.0/pow(qpsp(diff,diff),3.0/2.0)*diff;
                 }
         }
-        if(pow(qpsp(Force,Force), 0.5) > 100000){
-                Force *= 100000/pow(qpsp(Force,Force), 0.5);
-        }
+        
 }
